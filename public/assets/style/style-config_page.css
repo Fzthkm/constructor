@@ -360,6 +360,8 @@ h3 {
   overflow: hidden;
   scroll-behavior: smooth;
   position: relative;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 .component-list-img {

@@ -823,44 +823,44 @@ document.addEventListener("DOMContentLoaded", function () {
 // });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const switchers = document.querySelectorAll(".view-switcher");
-
-  switchers.forEach(switcher => {
-    const switcherId = switcher.dataset.switcherId;
-    const buttons = switcher.querySelectorAll(".view-btn");
-    const productContainers = document.querySelectorAll(
-      `.products-container[data-switcher-id="${switcherId}"]`
-    );
+    const buttons = document.querySelectorAll(".view-btn");
+    const listView = document.getElementById("list-view");
+    const gridView = document.getElementById("grid-view");
 
     function switchView(view) {
-      productContainers.forEach(pc => {
-        if (pc.dataset.viewType === view) {
-          pc.classList.remove("hidden");
+
+        window.currentView = view;
+        if (view === "grid") {
+            if (listView) listView.classList.add("hidden");
+            if (gridView) gridView.classList.remove("hidden");
         } else {
-          pc.classList.add("hidden");
+            if (gridView) gridView.classList.add("hidden");
+            if (listView) listView.classList.remove("hidden");
         }
-      });
     }
 
     buttons.forEach(button => {
-      button.addEventListener("click", function () {
-        buttons.forEach(btn => btn.classList.remove("active"));
-        this.classList.add("active");
-
-        let newView = this.dataset.view;
-
-        if (switcher.classList.contains("mobile-switcher")) {
-          newView = this.dataset.view === "grid" ? "list" : "grid";
-          this.dataset.view = newView;
-          this.innerHTML = newView === "grid"
-            ? `<span><div></div><div></div><div></div><div></div></span>`
-            : `<span></span>`;
-        }
-
-        switchView(newView);
-      });
+        button.addEventListener("click", function () {
+            buttons.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+            switchView(this.dataset.view);
+        });
     });
-  });
+
+    const mobileViewButton = document.querySelector(".view-switcher.mobile-switcher .view-btn");
+    if (mobileViewButton) {
+        mobileViewButton.addEventListener("click", function () {
+            const currentView = this.dataset.view;
+            const newView = currentView === "grid" ? "list" : "grid";
+
+            this.dataset.view = newView;
+            this.innerHTML = newView === "grid" ?
+                `<span><div></div><div></div><div></div><div></div></span>` :
+                `<span></span>`;
+
+            switchView(newView);
+        });
+    }
 });
 
 // Mobile filter opening

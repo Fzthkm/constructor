@@ -51,182 +51,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal-catalog");
   const modalTitle = document.getElementById("modal-title");
   const filtersContainer = document.getElementById("filter-container");
-  const searchInput = document.querySelector('.modal-header .filter-search input[type="text"]');
+  const searchInput = document.querySelector('.modal-header .filter .filter-search input[type="text"]');
   const toggleSale = document.getElementById("toggle");
   const sortDropdown = document.querySelector(".categories-dropdown");
   const productContainerList = document.getElementById("list-view");
   const productContainerGrid = document.getElementById("grid-view");
   const closeBtn = document.querySelector(".close-modal-btn");
-  const addPartButtons = document.querySelectorAll("[data-modal]");
+  const addPartButtons = document.querySelectorAll("[data-modal], .select-button[data-modal]");
   const categoryButtons = document.querySelectorAll(".categories button");
 
   let currentType = "";
-  let currentView = "list";
+  window.currentView = window.currentView || "list";
   let currentCategory = "";
 
   const filterMap = {
-    cooler: {
-      title: "Кулер",
-      items: [
-        {
-          type: 'slider',
-          title: 'Цена',
-          values: {
-            step: 0.01,
-            min: 239.57,
-            max: 20000,
-            currentMin: 239.57,
-            currentMax: 16325.36
-          }
-        },
-        {
-          type: 'SearchCheckbox',
-          title: 'Производитель',
-          values: [
-            { name: 'Cooler Master', qnt: 234 },
-            { name: 'Noctua', qnt: 234 }
-          ]
-        },
-        {
-          type: 'checkbox',
-          title: 'Система охлаждения',
-          values: [
-            { name: 'Воздушное', qnt: 234 },
-            { name: 'Жидкостное', qnt: 234 }
-          ]
-        },
-        {
-          type: 'checkbox',
-          title: 'Количество вентиляторов',
-          values: [
-            { name: '1', qnt: 234 },
-            { name: '2', qnt: 234 },
-            { name: 'Отсутствует', qnt: 234 }
-          ]
-        },
-        {
-          type: 'slider',
-          title: 'Уровень шума вентилятора, дБ',
-          values: {
-            step: 0.01,
-            min: 0,
-            max: 86,
-            currentMin: 0,
-            currentMax: 86
-          }
-        },
-        {
-          type: 'SearchCheckbox',
-          title: 'Socket',
-          values: [
-            { name: 'AM4', qnt: 234 },
-            { name: 'LGA1155', qnt: 234 },
-            { name: 'LGA1200', qnt: 234 },
-            { name: 'LGA1155 v2', qnt: 234 },
-            { name: 'LGA1156', qnt: 234 }
-          ]
-        },
-        {
-          type: 'checkbox',
-          title: 'Материал радиатора',
-          values: [
-            { name: 'Медь', qnt: 234 },
-            { name: 'Алюминий', qnt: 234 }
-          ]
-        },
-        {
-          type: 'checkbox',
-          title: 'Регулятор оборотов',
-          values: [
-            { name: 'PWM', qnt: 234 },
-            { name: 'Внутренний', qnt: 234 },
-            { name: 'Нет', qnt: 234 }
-          ]
-        },
-        {
-          type: 'slider',
-          title: 'Высота кулера, мм',
-          values: {
-            step: 0.01,
-            min: 0,
-            max: 86,
-            currentMin: 0,
-            currentMax: 86
-          }
-        },
-        {
-          type: 'checkbox',
-          title: 'LED-подсветка',
-          values: [
-            { name: 'ARGB', qnt: 234 },
-            { name: 'FRGB', qnt: 234 },
-            { name: 'RGB', qnt: 234 },
-            { name: 'Нет', qnt: 234 }
-          ]
-        }
-      ]
-    },
-    cpu: {
-      title: "Процессор",
-      items: [
-        {
-          type: 'slider',
-          title: 'Цена',
-          values: {
-            step: 0.01,
-            min: 0,
-            max: 5656,
-          }
-        },
-        {
-          type: 'checkbox',
-          title: 'Производитель',
-          values: [
-            { name: 'ARGB', qnt: 234 },
-            { name: 'FRGB', qnt: 234 },
-            { name: 'RGB', qnt: 234 },
-            { name: 'Нет', qnt: 234 }
-          ]
-        },
-        {
-          type: 'SearchCheckbox',
-          title: 'Система охлаждения',
-          values: [
-            { name: 'Cooler Master', qnt: 234 },
-            { name: 'Нет', qnt: 234 }
-          ]
-        }
-      ]
-    },
-
-    videocard: {
-      title: "Видеокарта",
-    },
-
-    motherboard: {
-      title: "Материнская плата",
-    },
-
-    powerunit: {
-      title: "Блок питания",
-    },
-
-    ram: {
-      title: "Оперативная память",
-    },
-
-    ssd: {
-      title: "SSD",
-    },
-
-    hdd: {
-      title: "Жёсткий диск",
-    },
-
-    case: {
-      title: "Корпус",
-    }
-
+    cooler: { title: "Кулер", items: [{ type: 'slider', title: 'Цена', values: { step: 0.01, min: 239.57, max: 20000, currentMin: 239.57, currentMax: 16325.36 } }] },
+    cpu: { title: "Процессор", items: [{ type: 'slider', title: 'Цена', values: { step: 0.01, min: 0, max: 5656 } }] },
+    videocard: { title: "Видеокарта" },
+    motherboard: { title: "Материнская плата" },
+    powerunit: { title: "Блок питания" },
+    ram: { title: "Оперативная память" },
+    ssd: { title: "SSD" },
+    hdd: { title: "Жёсткий диск" },
+    case: { title: "Корпус" }
   };
 
   function getCheckboxContent(data) {
@@ -293,9 +140,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   addPartButtons.forEach((button) => {
+    setOpenModalEventOnButton(button);
+  });
+  function setOpenModalEventOnButton(button) {
     button.addEventListener("click", () => {
       currentType = button.dataset.modal;
-      const data = filterMap[currentType] || { title: currentType.toUpperCase() };
+      const category_name = CATEGORIES[currentType];
+      const data = filterMap[category_name] || { title: currentType.toUpperCase() };
       modalTitle.textContent = data.title;
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
@@ -323,10 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class="show-btn">Показать <span>0</span></button>
           </div>
         `;
-
       logCurrentFilters();
     });
-  });
+  }
 
   closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
@@ -351,48 +201,288 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document.addEventListener("click", (event) => {
-    if (event.target.closest(".show-btn")) logCurrentFilters();
-    if (event.target.closest(".clear-btn")) {
-      clearAllFilters();
-      logCurrentFilters();
-    }
-  });
-
-  if (searchInput) {
-    searchInput.addEventListener("input", () => logCurrentFilters());
-  }
-
-  if (filtersContainer) {
-    filtersContainer.addEventListener("change", (e) => {
-      if (
-          e.target.matches('input[type="checkbox"]') ||
-          e.target.matches('input[type="range"]') ||
-          e.target.matches('input[type="number"]')
-      ) {
-        logCurrentFilters();
-      }
-    });
-  }
-
-  if (toggleSale) {
-    toggleSale.addEventListener("change", () => logCurrentFilters());
-  }
-
-  if (sortDropdown) {
-    sortDropdown.addEventListener("change", () => logCurrentFilters());
-  }
-
-
   [productContainerList, productContainerGrid].forEach((container) => {
     container.addEventListener("click", (event) => {
       if (event.target.closest(".buy-btn")) {
-        const productCard = event.target.closest(".product-card");
-        const productCode = productCard.querySelector(".product-code").textContent.split(": ")[1];
-        addProductToComparison(productCode);
+        const encodedData = event.target.getAttribute("data-product");
+        const product = JSON.parse(decodeURIComponent(encodedData));
+        console.log(product)
+        addProductToComponent(product);
       }
     });
   });
+
+  const CATEGORIES = {
+    8: 'cpu',
+    18: 'cooler',
+    15: 'videocard',
+    9: 'motherboard' ,
+    54: 'powerunit',
+    17: 'ram',
+    235: 'ssd',
+    90: 'hdd',
+    53: 'case',
+  };
+
+
+    function addProductToComponent(product) {
+    console.log(product);
+    const productId = product.code;
+    const currentType = product.categoty_id;
+    console.log("Adding product with ID:", productId);
+
+    const component_id = 'b_' + currentType;
+    const component_name = CATEGORIES[currentType];
+
+    const component = document.getElementById(component_id);
+    if (!component) {
+      console.error("Компонент не найден для типа:", currentType);
+      return;
+    }
+
+    const originalWidth = component.clientWidth;
+    let cardContainer = component.querySelector(".component-cards-container");
+
+    // Если контейнер ещё не создан — создаём его один раз
+    if (!cardContainer) {
+      createCardContainerStructure(component, originalWidth, component_name, component_id);
+      cardContainer = component.querySelector(".component-cards-container");
+    }
+
+    const card = createProductCard(product, component, component_name);
+    cardContainer.appendChild(card);
+
+    updateScrollButtons(component);
+
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+
+  function createCardContainerStructure(component, originalWidth, component_name, component_id) {
+    component.innerHTML = `
+    <div class="component-list-container">
+      <div class="component-list"></div>
+    </div>
+  `;
+    component.classList.add("component-expanded");
+    component.style.width = `${originalWidth}px`;
+
+    const listContainer = component.querySelector(".component-list");
+
+    const cardContainer = document.createElement("div");
+    cardContainer.classList.add("component-cards-container");
+    listContainer.appendChild(cardContainer);
+
+    const scrollBtnContainer = createScrollButtons(component);
+    component.appendChild(scrollBtnContainer);
+
+    const actionBtnContainer = createActionButtons(component, component_name, component_id);
+    component.appendChild(actionBtnContainer);
+
+    component.querySelector('.component-list-container').style.display = "block";
+  }
+
+  function createScrollButtons(component) {
+    const container = document.createElement("div");
+    container.classList.add("scroll-btn-container");
+
+    const leftBtn = document.createElement("button");
+    leftBtn.classList.add("scroll-btn", "scroll-left", "disabled");
+    leftBtn.innerHTML = `<img src="./assets/images/icons/arrow-left.svg" alt="left">`;
+    leftBtn.dataset.bound = false;
+
+    const rightBtn = document.createElement("button");
+    rightBtn.classList.add("scroll-btn", "scroll-right", "disabled");
+    rightBtn.innerHTML = `<img src="./assets/images/icons/arrow-right.svg" alt="right">`;
+    rightBtn.dataset.bound = false;
+
+    container.appendChild(leftBtn);
+    container.appendChild(rightBtn);
+
+    return container;
+  }
+
+  function createActionButtons(component, component_name, component_id) {
+    const container = document.createElement("div");
+    container.classList.add("action-btn-container");
+
+    const addButton = document.createElement("button");
+    addButton.classList.add("action-btn", "add-btn");
+    addButton.innerHTML = `
+    <img src="./assets/images/icons/add.svg" alt="add">
+    <span class="btn-label">добавить</span>
+  `;
+    addButton.setAttribute("data-modal", component_id);
+    setOpenModalEventOnButton(addButton);
+    container.appendChild(addButton);
+
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("action-btn", "remove-btn");
+    removeButton.innerHTML = `
+    <img src="./assets/images/icons/delete.svg" alt="remove">
+    <span class="btn-label">удалить</span>
+  `;
+
+    removeButton.addEventListener("click", () => {
+      const cardContainer = component.querySelector(".component-cards-container");
+      cardContainer.innerHTML = "";
+      restoreOriginalComponent(component, component_name);
+    });
+
+    container.appendChild(removeButton);
+
+    return container;
+  }
+
+  function createProductCard(product, component, component_name) {
+    const card = document.createElement("div");
+    card.classList.add("component-list-card");
+    card.dataset.id = product.code;
+
+    card.innerHTML = `
+    <div class="component-list-img">
+      <img src="${product.image || './assets/images/card-3.png'}" alt="${product.title || 'Товар'}">
+    </div>
+    <div class="component-list-info">
+      <div>
+        <span>${filterMap[component_name]?.title || component_name.toUpperCase()}</span>
+        <img src="./assets/images/icons/config_page/warning_img.svg" alt="obligatory" />
+      </div>
+      <div>${product.title || 'Без названия'}</div>
+      <div class="component-list-price">${product.price || 'N/A'} <span>руб</span></div>
+    </div>
+    <div class="component-list-btns">
+      <button class="component-list-btn-change">
+        <img src="./assets/images/icons/change.svg">
+        <span>заменить</span>
+      </button>
+      <button class="component-list-btn-delete">
+        <img src="./assets/images/icons/delete.svg">
+        <span>удалить</span>
+      </button>
+    </div>
+  `;
+
+
+    card.querySelector(".component-list-btn-change").addEventListener("click", () => {
+      const selectButton = document.querySelector(`.select-button[data-modal="${component.dataset.type}"]`);
+      if (selectButton) selectButton.click();
+    });
+
+    card.querySelector(".component-list-btn-delete").addEventListener("click", () => {
+      card.remove();
+      updateScrollButtons(component);
+      const cardContainer = component.querySelector(".component-cards-container");
+      if (!cardContainer || cardContainer.querySelectorAll(".component-list-card").length === 0) {
+        restoreOriginalComponent(component, component_name);
+      }
+    });
+
+    return card;
+  }
+
+  function updateScrollButtons(component) {
+    const cardContainer = component.querySelector(".component-cards-container");
+    const scrollBtnContainer = component.querySelector(".scroll-btn-container");
+    const scrollLeftBtn = component.querySelector(".scroll-left");
+    const scrollRightBtn = component.querySelector(".scroll-right");
+
+    if (!cardContainer || !scrollBtnContainer || !scrollLeftBtn || !scrollRightBtn) return;
+
+    const cardCount = cardContainer.querySelectorAll(".component-list-card").length;
+
+    // Скрываем кнопки, если недостаточно карточек
+    if (cardCount < 2) {
+      scrollBtnContainer.style.display = "none";
+      return;
+    }
+
+    scrollBtnContainer.style.display = "flex";
+
+    const maxScrollLeft = cardContainer.scrollWidth - cardContainer.clientWidth;
+
+    function updateButtonState() {
+      scrollLeftBtn.classList.toggle("disabled", cardContainer.scrollLeft <= 0);
+      scrollRightBtn.classList.toggle("disabled", cardContainer.scrollLeft >= maxScrollLeft - 1);
+    }
+
+    if (!cardContainer._scrollHandlerBound) {
+      cardContainer.addEventListener("scroll", updateButtonState);
+      cardContainer._scrollHandlerBound = true;
+    }
+
+    if (!scrollLeftBtn._clickHandlerBound) {
+      scrollLeftBtn.addEventListener("click", () => {
+        if (!scrollLeftBtn.classList.contains("disabled")) {
+          cardContainer.scrollBy({ left: -280, behavior: 'smooth' });
+        }
+      });
+      scrollLeftBtn._clickHandlerBound = true;
+    }
+
+    if (!scrollRightBtn._clickHandlerBound) {
+      scrollRightBtn.addEventListener("click", () => {
+        if (!scrollRightBtn.classList.contains("disabled")) {
+          cardContainer.scrollBy({ left: 280, behavior: 'smooth' });
+        }
+      });
+      scrollRightBtn._clickHandlerBound = true;
+    }
+
+    requestAnimationFrame(updateButtonState);
+  }
+
+
+  function restoreOriginalComponent(component, type) {
+    console.log(type);
+    component.innerHTML = `
+            <div class="component-part component-img">
+                <img src="./assets/images/icons/config_page/${type}_img.svg" alt="${type}-img" />
+            </div>
+            <div class="component-part component-info">
+                <span class="component-name">${filterMap[type]?.title || type.toUpperCase()}</span>
+                <img src="./assets/images/icons/config_page/warning_img.svg" alt="obligatory" />
+            </div>
+            <div class="component-part component-product-count">353 товара</div>
+            <button class="component-part primary-btn select-button" data-modal="${type}">
+                Выбрать
+                <img src="./assets/images/buttons/plus-review.svg" alt="">
+            </button>
+        `;
+    component.classList.remove("component-expanded");
+    component.style.width = "";
+
+    const selectButton = component.querySelector(".select-button");
+    if (selectButton) {
+      selectButton.addEventListener("click", () => {
+        currentType = selectButton.dataset.modal;
+        const data = filterMap[currentType] || { title: currentType.toUpperCase() };
+        modalTitle.textContent = data.title;
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+
+        let html = [];
+        if (data.items) {
+          data.items.forEach((filter) => {
+            if (filter.type === "slider") {
+              html.push(getSliderContent(filter));
+            }
+          });
+        }
+        filtersContainer.innerHTML = `
+                    ${html.join("\n")}
+                    <div class="filter-buttons">
+                        <button class="clear-btn">Очистить</button>
+                        <button class="show-btn">Показать <span>0</span></button>
+                    </div>
+                `;
+
+        logCurrentFilters();
+      });
+    }
+  }
+
 
   function logCurrentFilters() {
     const filters = getSelectedFilters();
@@ -403,7 +493,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const payload = { search, filters, saleOnly, sort, category };
 
-    console.clear();
+    clearModal('Идут загрузка данных...');
+    //console.clear();
     console.log("Отправляемые данные на бэк:", payload);
     sendFilters(payload, currentType);
   }
@@ -440,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Данные от API:", data);
           if (!data || !Array.isArray(data.products)) {
             console.error("Invalid products dta:", data);
-            renderProducts([]);
+            renderProducts([], type);
             return;
           }
           const adaptedProducts = data.products.map(product => ({
@@ -452,43 +543,31 @@ document.addEventListener("DOMContentLoaded", () => {
             tags: product.tags || [],
             oldPrice: product.oldPrice || null
           }));
-          renderProducts(adaptedProducts);
+          renderProducts(adaptedProducts, type);
         })
         .catch((error) => {
           console.error("Ошибка при запросе к API:", error);
-          renderProducts([]);
+          renderProducts([], type);
         });
   }
 
-  function addProductToComparison(productId) {
-    fetch(`/config/products/${productId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Ошибка при добавлении продукта");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Продукт добавлен в сборку:", data);
-          modal.style.display = "none";
-          document.body.style.overflow = "";
-        })
-        .catch((error) => {
-          console.error("Ошибка при добавлении:", error);
-        });
-  }
-
-  function renderProducts(products) {
+  function clearModal(text = '') {
     const productContainer = currentView === "list" ? productContainerList : productContainerGrid;
     const otherContainer = currentView === "list" ? productContainerGrid : productContainerList;
-    productContainer.innerHTML = "";
+
+    productContainer.innerHTML = text;
     otherContainer.innerHTML = "";
+  }
+
+  function renderProducts(products, category_id) {
+    const productContainerList = document.getElementById("list-view");
+    const productContainerGrid = document.getElementById("grid-view");
+    const productContainer = currentView === "list" ? productContainerList : productContainerGrid;
+
+    clearModal();
 
     if (!Array.isArray(products)) {
-      console.error("Invalid requred data tupe:", products);
+      console.error("Invalid required data type:", products);
       productContainer.innerHTML = `<div class="products-container-no-match">Ошибка: некорректные данные продуктов</div>`;
       return;
     }
@@ -499,97 +578,102 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     products.forEach((product) => {
+      product.categoty_id = category_id.replace(/\D/g, "");
+      const json_product_data = encodeURIComponent(JSON.stringify(product));
       const card = document.createElement("div");
-      card.className = `product-card ${currentView}-style ${currentView === "list" ? "desktop-only" : ""}`;
-      card.innerHTML = `
-      <div class="product-card-img ${currentView}-style">
-        <div class="card-img-main-product ${currentView}-style">
-          <img src="${product.image || './assets/images/placeholder.png'}" alt="${product.title || 'Без названия'}">
-        </div>
-      </div>
-      <div class="info">
-        ${
-          currentView === "grid"
-              ? `<div class="product-title-rate">
-                <h3 class="product-title ${currentView}-style">${product.title || 'Без названия'}</h3>
-              </div>`
-              : `<h3 class="product-title ${currentView}-style">${product.title || 'Без названия'}</h3>`
-      }
-        <div class="${currentView === "grid" ? "info-details" : "more-data"}">
-          <div class="product-code ${currentView}-style">Код товара: ${product.code || 'N/A'}</div>
-          <div class="details" id="details-btn">
-            <a href="#">
-              <span class="full-text">Смотреть подробнее</span>
-              <span class="short-text">Подробнее</span>
-              <img src="./assets/images/icons/view-detaitls.svg">
-            </a>
-          </div>
-        </div>
-        <div class="product-characterictic-tags">
-          ${product.tags?.map((tag) => `<span>${tag}</span>`).join("") || ""}
-        </div>
-        ${
-          currentView === "grid"
-              ? `
-              <div class="product-price">
-                <div class="cont-price ${currentView}-style">
-                  <p class="new-price ${currentView}-style">${product.price || 'N/A'}</p>
-                  ${product.oldPrice ? `<p class="old-price ${currentView}-style">${product.oldPrice}</p>` : ""}
+      card.className = `product-card ${currentView}-style`;
+      card.innerHTML = currentView === "grid" ? `
+                <div class="product-card-img grid-style">
+                    <div class="card-img-main-product grid-style">
+                        <img src="${product.image || './assets/images/placeholder.png'}" alt="${product.title || 'Без названия'}">
+                    </div>
                 </div>
-                <div class="payment-option green ${currentView}-style desktop-only">от <span>${product.installment || 'N/A'}</span> руб/мес</div>
-              </div>
-              <div class="button-cont">
-                <button class="buy-btn">Добавить</button>
-              </div>`
-              : ""
-      }
-      </div>
-      ${
-          currentView === "list"
-              ? `
-            <div class="cashflow-options ${currentView}-style">
-              <div class="buy-options">
-                <div class="cont-price ${currentView}-style">
-                  <p class="new-price">${product.price || 'N/A'}</p>
-                  ${product.oldPrice ? `<p class="old-price ${currentView}-style">${product.oldPrice}</p>` : ""}
+                <div class="info">
+                    <div class="product-title-rate">
+                        <h3 class="product-title grid-style">${product.title || 'Без названия'}</h3>
+                    </div>
+                    <div class="info-details">
+                        <div class="product-code grid-style">Код товара: ${product.code || 'N/A'}</div>
+                        <div class="details">
+                            <a href="#">
+                                <span class="full-text">Смотреть подробнее</span>
+                                <span class="short-text">Подробнее</span>
+                                <img src="./assets/images/icons/view-detaitls.svg">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-characterictic-tags">
+                        ${product.tags?.map((tag) => `<span>${tag}</span>`).join("") || ""}
+                    </div>
+                    <div class="product-price">
+                        <div class="cont-price grid-style">
+                            <p class="new-price grid-style">${product.price || 'N/A'}</p>
+                            ${product.oldPrice ? `<p class="old-price grid-style">${product.oldPrice}</p>` : ""}
+                        </div>
+                        <div class="payment-option green grid-style desktop-only">от <span>${product.installment || 'N/A'}</span> руб/мес</div>
+                    </div>
+                    <div class="button-cont">
+                        <button class="buy-btn" data-product="${json_product_data}">Добавить</button>
+                    </div>
                 </div>
-                <div class="payment-options">
-                  <div class="payment-option green">от <span>${product.installment || 'N/A'}</span> руб/мес</div>
-                  <div class="payment-desc">картой рассрочки <br> или в кредит</div>
+            ` : `
+                <div class="product-card-img list-style">
+                    <div class="card-img-main-product list-style">
+                        <img src="${product.image || './assets/images/placeholder.png'}" alt="${product.title || 'Без названия'}">
+                    </div>
                 </div>
-              </div>
-              <div class="buttons-for-deal">
-                <button class="buy-btn">Добавить</button>
-              </div>
-            </div>`
-              : ""
-      }
-    `;
+                <div class="info">
+                    <h3 class="product-title list-style">${product.title || 'Без названия'}</h3>
+                    <div class="more-data">
+                        <div class="product-code list-style">Код товара: ${product.code || 'N/A'}</div>
+                        <div class="details" id="details-btn">
+                            <a href="#">
+                                <span class="full-text">Смотреть подробнее</span>
+                                <span class="short-text">Подробнее</span>
+                                <img src="./assets/images/icons/view-detaitls.svg">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-characterictic-tags">
+                        ${product.tags?.map((tag) => `<span>${tag}</span>`).join("") || ""}
+                    </div>
+                </div>
+                <div class="cashflow-options list-style">
+                    <div class="buy-options">
+                        <div class="cont-price list-style">
+                            <p class="new-price">${product.price || 'N/A'}</p>
+                            ${product.oldPrice ? `<p class="old-price list-style">${product.oldPrice}</p>` : ""}
+                        </div>
+                        <div class="payment-options">
+                            <div class="payment-option green">от <span>${product.installment || 'N/A'}</span> руб/мес</div>
+                            <div class="payment-desc">картой рассрочки <br> или в кредит</div>
+                        </div>
+                    </div>
+                    <div class="buttons-for-deal">
+                        <button class="buy-btn" data-product="${json_product_data}">Добавить</button>
+                    </div>
+                </div>
+            `;
       productContainer.appendChild(card);
     });
   }
 
-
   function clearAllFilters() {
     const allCheckboxes = filtersContainer?.querySelectorAll('input[type="checkbox"]');
     allCheckboxes?.forEach((cb) => (cb.checked = false));
-
     const sliders = filtersContainer?.querySelectorAll(".filter-section.price");
     sliders?.forEach((slider) => {
       const minInput = slider.querySelector(".input-min");
       const maxInput = slider.querySelector(".input-max");
       const rangeMin = slider.querySelector(".range-min");
       const rangeMax = slider.querySelector(".range-max");
-
       const min = parseFloat(rangeMin?.getAttribute("min")) || 0;
       const max = parseFloat(rangeMax?.getAttribute("max")) || 100;
-
       if (minInput) minInput.value = min;
       if (maxInput) maxInput.value = max;
       if (rangeMin) rangeMin.value = min;
       if (rangeMax) rangeMax.value = max;
     });
-
     if (searchInput) searchInput.value = "";
     if (toggleSale) toggleSale.checked = false;
     if (sortDropdown && sortDropdown.options.length > 0) {
@@ -602,26 +686,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function getSelectedFilters() {
     const filters = {};
     if (!filtersContainer) return filters;
-
     const allCheckboxes = filtersContainer.querySelectorAll('input[type="checkbox"]:checked');
     allCheckboxes.forEach((checkbox) => {
       const group = checkbox.closest(".filter-section");
       const title = group?.querySelector("h3")?.textContent.trim();
       const labelText = checkbox.parentNode?.textContent || checkbox.value;
       const value = labelText.trim().split("(")[0].trim();
-
       if (title && value) {
         if (!filters[title]) filters[title] = [];
         filters[title].push(value);
       }
     });
-
     const sliders = filtersContainer.querySelectorAll(".filter-section.price");
     sliders.forEach((slider) => {
       const title = slider.querySelector("h3")?.textContent.trim();
       const minInput = slider.querySelector(".input-min");
       const maxInput = slider.querySelector(".input-max");
-
       if (title && minInput && maxInput) {
         const min = parseFloat(minInput.value);
         const max = parseFloat(maxInput.value);
@@ -630,152 +710,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
-
     return filters;
-  }
-});
-
-
-// Open parts variants
-
-document.addEventListener("DOMContentLoaded", () => {
-  const selectButtons = document.querySelectorAll(".select-button");
-
-  selectButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      const component = button.closest(".component");
-
-      if (!component) return;
-
-      const originalWidth = component.clientWidth;
-
-      const originalHTML = component.innerHTML;
-      component.innerHTML = "";
-      component.classList.add("component-expanded");
-
-      const cardContainer = document.createElement("div");
-      cardContainer.classList.add("component-cards-container");
-
-      function createCard() {
-        const card = document.createElement("div");
-        card.classList.add("component-list-card");
-        card.innerHTML = `
-          <div class="component-list-img">
-            <img src="./assets/images/card-3.png">
-          </div>
-          <div class="component-list-info">
-            <div>
-              <span>Материнская плата</span>
-              <img src="./assets/images/icons/config_page/warning_img.svg" alt="obligatory" />
-            </div>
-            <div>ASUS Prime B760M-K D4</div>
-            <div class="component-list-price">1256. <span>7 руб</span></div>
-          </div>
-          <div class="component-list-btns">
-            <button class="component-list-btn-change">
-              <img src="./assets/images/icons/change.svg">
-              <span>заменить</span>
-            </button>
-            <button class="component-list-btn-delete">
-              <img src="./assets/images/icons/delete.svg">
-              <span>удалить</span>
-            </button>
-          </div>
-        `;
-        return card;
-      }
-
-      for (let i = 0; i < 3; i++) {
-        cardContainer.appendChild(createCard());
-      }
-
-      const scrollBtnContainer = document.createElement("div");
-      scrollBtnContainer.classList.add("scroll-btn-container");
-
-      const scrollLeftBtn = document.createElement("button");
-      scrollLeftBtn.classList.add("scroll-btn", "disabled");
-      scrollLeftBtn.innerHTML = `<img src="./assets/images/icons/arrow-left.svg" alt="left">`;
-
-      const scrollRightBtn = document.createElement("button");
-      scrollRightBtn.classList.add("scroll-btn");
-      scrollRightBtn.innerHTML = `<img src="./assets/images/icons/arrow-right.svg" alt="right">`;
-
-      scrollBtnContainer.appendChild(scrollRightBtn);
-      scrollBtnContainer.appendChild(scrollLeftBtn);
-
-      let scrollAmount = 0;
-      const scrollStep = 280;
-
-      function updateScrollButtons() {
-        const maxScroll = cardContainer.scrollWidth - cardContainer.clientWidth;
-        scrollLeftBtn.classList.toggle("disabled", scrollAmount <= 0);
-        scrollRightBtn.classList.toggle("disabled", scrollAmount >= maxScroll);
-      }
-
-      scrollRightBtn.addEventListener("click", () => {
-        const maxScroll = cardContainer.scrollWidth - cardContainer.clientWidth;
-        scrollAmount = Math.min(scrollAmount + scrollStep, maxScroll);
-        cardContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
-        updateScrollButtons();
-      });
-
-      scrollLeftBtn.addEventListener("click", () => {
-        scrollAmount = Math.max(scrollAmount - scrollStep, 0);
-        cardContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
-        updateScrollButtons();
-      });
-
-      cardContainer.addEventListener('scroll', () => {
-        scrollAmount = cardContainer.scrollLeft;
-        updateScrollButtons();
-      });
-
-      component.appendChild(cardContainer);
-      component.appendChild(scrollBtnContainer);
-
-      const actionBtnContainer = document.createElement("div");
-      actionBtnContainer.classList.add("action-btn-container");
-
-      const addButton = document.createElement("button");
-      addButton.classList.add("action-btn", "add-btn");
-      addButton.innerHTML = `
-                              <img src="./assets/images/icons/add.svg" alt="add">
-                              <span class="btn-label">добавить</span>
-                            `;;
-
-      const removeButton = document.createElement("button");
-      removeButton.classList.add("action-btn", "remove-btn");
-      removeButton.innerHTML = `<img src="./assets/images/icons/delete.svg" alt="remove">
-                                <span class="btn-label">удалить</span>
-                              `;
-
-      actionBtnContainer.appendChild(addButton);
-      actionBtnContainer.appendChild(removeButton);
-
-      component.appendChild(actionBtnContainer);
-
-      setTimeout(updateScrollButtons, 0);
-
-      component.style.width = `${originalWidth}px`;
-
-      // del cards
-      cardContainer.querySelectorAll(".component-list-btn-delete").forEach(deleteBtn => {
-        deleteBtn.addEventListener("click", () => {
-          component.innerHTML = originalHTML;
-          component.classList.remove("component-expanded");
-          attachEventListeners(component);
-        });
-      });
-    });
-  });
-
-  function attachEventListeners(component) {
-    const button = component.querySelector(".select-button");
-    if (button) {
-      button.addEventListener("click", () => {
-        button.click();
-      });
-    }
   }
 });
 
@@ -823,9 +758,11 @@ document.addEventListener('DOMContentLoaded', function() {
 //
 
 document.addEventListener('DOMContentLoaded', function(element) {
-  document.getElementById('mainImg').src = element.src;
-  document.querySelectorAll('.modal-preview-img-wrapper').forEach(img => img.classList.remove('active'));
-  element.classList.add('active');
+  if(element.src) {
+    document.getElementById('mainImg').src = element.src;
+    document.querySelectorAll('.modal-preview-img-wrapper').forEach(img => img.classList.remove('active'));
+    element.classList.add('active');
+  }
 })
 
 //
@@ -946,38 +883,48 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function() {
   const chooseBtn = document.getElementById('choose-more');
   const modalShop = document.getElementById('modal-cooler-catalog');
-  const closeModalBtn = modalShop.querySelector('.close-modal-btn');
+  if (modalShop) {
+    const closeModalBtn = modalShop.querySelector('.close-modal-btn');
+    closeModalBtn.addEventListener('click', closeModal);
+  }
   const changeBtn = document.getElementById('change-btn')
   const body = document.getElementsByTagName('body')
 
 
   function openModal(e) {
     if (e) e.preventDefault();
-    modalShop.style.display = 'flex';
-    setTimeout(() => {
-      modalShop.classList.add('active');
-    }, 10);
-    body.style.overflow = 'hidden';
+    if (modalShop) {
+      modalShop.style.display = 'flex';
+      setTimeout(() => {
+        modalShop.classList.add('active');
+      }, 10);
+    }
+    if (body && body.style) {
+      body.style.overflow = 'hidden';
+    }
   }
 
   function closeModal() {
-    modalShop.classList.remove('active');
-    setTimeout(() => {
-      modalShop.style.display = 'none';
-      body.style.overflow = '';
+    if (modalShop) {
+      modalShop.classList.remove('active');
+      setTimeout(() => {
+        modalShop.style.display = 'none';
+        body.style.overflow = '';
 
-    }, 300);
+      }, 300);
+    }
   }
 
   chooseBtn.addEventListener('click', openModal);
   changeBtn.addEventListener('click', openModal);
-  closeModalBtn.addEventListener('click', closeModal);
 
-  modalShop.addEventListener('click', function(e) {
-    if (e.target === modalShop) {
-      closeModal();
-    }
-  });
+  if (modalShop) {
+    modalShop.addEventListener('click', function(e) {
+      if (e.target === modalShop) {
+        closeModal();
+      }
+    });
+  }
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && modalShop.style.display === 'flex') {
